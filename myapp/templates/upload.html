@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{% block body %}
+<div id="search">
+<div id='search_box'>
+<form id='search_form' method="POST" action="{{url_for('upload')}}" enctype = 'multipart/form-data'>
+	<input type="file" name="image" id="input_image" class="inputfile"/>
+    <input id='submit' type="submit" value="Submit">
+</form>	
+</div>
+</div>
+
+{% endblock %}
