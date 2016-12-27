@@ -18,6 +18,8 @@ def index():
 @app.route('/upload',methods=['GET','POST'])
 def upload():
 	file = request.files['image']
+	scale = request.form.get('scale')
+	scale = str(scale)
 	if file:
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config['UPLOAD_PATH'], filename))

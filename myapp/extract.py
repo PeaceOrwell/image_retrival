@@ -9,16 +9,19 @@ import caffe
 class extractor:
     def __init__(self):
 
-        caffe_model = '/home/deepcare/Documents/caffe/models/retrival_tumor_m/finetune/voc_48_iter_10000.caffemodel'
-        mean_npy_file = caffe_root + 'models/retrival_tumor_m/mean_train.npy'
-        net_file = caffe_root +'models/retrival_tumor_m/deploy.prototxt'
-        self.net = caffe.Net(net_file, caffe_model, caffe.TEST)
+        caffe_model_m = '/home/deepcare/Documents/caffe/models/retrival_tumor_m/finetune/voc_48_iter_20000.caffemodel'
+        mean_npy_file_m = caffe_root + 'models/retrival_tumor_m/mean_train.npy'
+        net_file_m = caffe_root +'models/retrival_tumor_m/deploy.prototxt'
+        caffe_model_l = '/home/deepcare/Documents/caffe/models/retrival_tumor/finetune/voc_48_iter_20000.caffemodel'
+        mean_npy_file_l = caffe_root + 'models/retrival_tumor/mean_train.npy'
+        net_file_l = caffe_root +'models/retrival_tumor/deploy.prototxt'
+        self.net = caffe.Net(net_file_m, caffe_model_m, caffe.TEST)
         self.transformer = caffe.io.Transformer({'data': self.net.blobs['data'].data.shape})
         self.transformer.set_transpose('data', (2,0,1))
-        self.transformer.set_mean('data', np.load(mean_npy_file).mean(1).mean(1)) 
+        self.transformer.set_mean('data', np.load(mean_npy_file_m).mean(1).mean(1)) 
         self.transformer.set_raw_scale('data', 255)  
         self.transformer.set_channel_swap('data', (2,1,0))
-        caffe.set_mode_gpu()
+        caffe.set_mode_cpu()
 
     def extract_features(self, image):
         img_large = transform.resize(image, (256, 256))

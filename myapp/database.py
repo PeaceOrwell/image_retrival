@@ -11,7 +11,7 @@ class database:
 		cursor.execute("select * from lung_m where coarse_key = %s"%coarse_str)
 		new_complete_list = list(cursor.fetchall())
 		if len(new_complete_list) < num:
-			cursor.execute('select id,coarse_key from lung')
+			cursor.execute('select id,coarse_key from lung_m')
 			fetch_infos = cursor.fetchall()
 			new_list = []
 			for len_hanming in xrange(1, 47):
