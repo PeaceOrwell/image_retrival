@@ -49,11 +49,43 @@
 	{% for file in res_files %}
 	<li>
         <div>
-           <img src={{file[0]}} width="300" height="300"/>
+           <a href="{{url_for('show_details',database_name=file[2],image_name=file[0].split('/')[-1])}}"><img src={{file[0]}} width="300" height="300"/></a>
            <span class='type_name'>肿瘤类型:{{file[1]}}</span>
         </div> 
     </li> 
 	{% endfor %}
 	</ul>
 </div>
+{% block scripts %}
+{{super()}}
+<script type="text/javascript">
+function zoomBox() {this.index.apply(this, arguments)}
+zoomBox.prototype = {
+    index: function(win,zoom) {
+        var win=document.getElementById(win);
+        var box=document.getElementById(zoom);
+        var img=box.getElementsByTagName('IMG')[0];
+        var zoom=img.width/win.getElementsByTagName('IMG')[0].width;
+        var z=Math.round(box.offsetWidth/2);
+        win.onmousemove=function (e){
+            e = e || window.event;
+            var x=e.clientX,y=e.clientY, ori=win.getBoundingClientRect();
+            if (x>ori.right+10||y>ori.bottom+10||x<ori.left-10||y<ori.top-10)
+                box.style.display='none';
+            x-=ori.left;
+            y-=ori.top;
+            box.style.left=x+'px';
+            box.style.top=y+'px';
+            img.style.left= -x*zoom+ z+'px';
+            img.style.top= -y*zoom + z+'px';
+        }
+        win.onmouseover=function (){box.style.display=''}
+        win.onmouseout=function (){box.style.display='none'}
+    }
+};
+window.onload=function (){
+    x=new zoomBox('zoomPan','zoom');
+}	
+</script>
+{% endblock %}
 {% endblock %}

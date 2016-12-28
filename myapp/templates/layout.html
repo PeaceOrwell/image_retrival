@@ -5,8 +5,8 @@
 {% block head %}
 <meta http-equiv="pragma" content="no-cache" />
 {{super()}}
-<link rel="stylesheet" type="text/css" href="static/css/layout.css?v=020dd1s2s222dsw090">
-<script type="text/javascript" src="static/js/res_images.js?v=13944629992331"></script>
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/layout.css')}}">
+<script type="text/javascript" src="{{url_for('static',filename='js/res_images.js')}}"></script>
 {% endblock %}
 {% block content %}
 <div class="container">

@@ -11,7 +11,8 @@ Bootstrap(app)
 app.register_blueprint(admin)
 mysql = MySQL()
 mysql.init_app(app)
-caffe_net = extractor()
+caffe_net_m = extractor('100')
+caffe_net_l = extractor('400')
 
 
 
